@@ -5,6 +5,8 @@ import com.android.billingclient.api.ProductDetails
 class PlayMarketConsumable(
     val id: String,
     val formattedPrice: String,
+    val price: Long,
+    val currency: String,
     internal val payload: ProductDetails,
 ) : Purchasable {
 

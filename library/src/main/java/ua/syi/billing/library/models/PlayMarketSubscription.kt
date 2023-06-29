@@ -11,7 +11,7 @@ class PlayMarketSubscription internal constructor(
     val introductoryFormattedPrice: String?,
     val introductoryPriceDays: Int,
     val discount: Int,
-
+    val currency: String,
     internal val payload: ProductDetails,
     internal val offerToken: String?,
 ): Purchasable {
@@ -33,6 +33,7 @@ class PlayMarketSubscription internal constructor(
             discount = discount ?: this.discount,
             payload = payload,
             offerToken = offerToken,
+            currency = currency,
         )
     }
 

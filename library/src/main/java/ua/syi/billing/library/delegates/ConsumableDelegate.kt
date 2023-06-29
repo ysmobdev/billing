@@ -56,6 +56,8 @@ internal class ConsumableDelegate(client: BillingClient) : PlayMarketDelegate(cl
             id = productId,
             formattedPrice = subDetailOffer.formattedPrice,
             payload = this,
+            price = subDetailOffer.priceAmountMicros / 1_000_000,
+            currency = subDetailOffer.priceCurrencyCode,
         )
     }
 

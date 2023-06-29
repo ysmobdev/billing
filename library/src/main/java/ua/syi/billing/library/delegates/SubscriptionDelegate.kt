@@ -68,10 +68,10 @@ internal class SubscriptionDelegate(
         ids: Set<String>,
         discountIds: Set<String>
     ): List<PlayMarketSubscription> {
-        val baseSubcriptions = getSubscriptions(ids)
+        val baseSubscriptions = getSubscriptions(ids)
         val discountSubscriptions = getSubscriptions(discountIds)
-        val discounts = calculateDiscounts(baseSubcriptions, discountSubscriptions)
-        return applyDiscounts(baseSubcriptions, discountSubscriptions, discounts)
+        val discounts = calculateDiscounts(baseSubscriptions, discountSubscriptions)
+        return applyDiscounts(baseSubscriptions, discountSubscriptions, discounts)
     }
 
     private suspend fun getSubscriptions(ids: Set<String>): List<PlayMarketSubscription> {
@@ -82,7 +82,7 @@ internal class SubscriptionDelegate(
     }
 
     private fun calculateDiscounts(
-        baseSubcriptions: List<PlayMarketSubscription>,
+        baseSubscriptions: List<PlayMarketSubscription>,
         discountSubscriptions: List<PlayMarketSubscription>
     ): Map<PlayMarketSubscription.Period, Int> {
         val annualDiscountSub =
@@ -90,9 +90,9 @@ internal class SubscriptionDelegate(
         val monthlyDiscountSub =
             discountSubscriptions.firstOrNull { it.period == PlayMarketSubscription.Period.Monthly }
         val annualBaseSub =
-            baseSubcriptions.first { it.period == PlayMarketSubscription.Period.Annual }
+            baseSubscriptions.first { it.period == PlayMarketSubscription.Period.Annual }
         val monthlyBaseSub =
-            baseSubcriptions.first { it.period == PlayMarketSubscription.Period.Monthly }
+            baseSubscriptions.first { it.period == PlayMarketSubscription.Period.Monthly }
 
         //Если у нас есть скидочная предложение то подсчет делаем относительно главной цены
         val annualDiscount = if (annualDiscountSub != null) {
@@ -115,11 +115,11 @@ internal class SubscriptionDelegate(
     }
 
     private fun applyDiscounts(
-        subcriptions: List<PlayMarketSubscription>,
+        subscriptions: List<PlayMarketSubscription>,
         discountSubscriptions: List<PlayMarketSubscription>,
         discounts: Map<PlayMarketSubscription.Period, Int>
     ): List<PlayMarketSubscription> {
-        return subcriptions.map { sub ->
+        return subscriptions.map { sub ->
             val discountSub = discountSubscriptions.firstOrNull { it.period == sub.period }
             sub.copy(
                 discount = discounts.getOrElse(sub.period) { 0 },
@@ -160,6 +160,7 @@ internal class SubscriptionDelegate(
             offerToken = subDetailOffer.offerToken,
             payload = this,
             discount = 0,
+            currency = mainPricing.priceCurrencyCode,
         )
     }
 
