@@ -34,7 +34,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "ua.ysmobdev.billing"
             artifactId = "library"
-            version = "1.0.12"
+            version = "1.0.14"
 
             afterEvaluate {
                 from(components["release"])

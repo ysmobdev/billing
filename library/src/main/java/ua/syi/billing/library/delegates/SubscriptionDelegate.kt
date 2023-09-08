@@ -90,9 +90,13 @@ internal class SubscriptionDelegate(
         val monthlyDiscountSub =
             discountSubscriptions.firstOrNull { it.period == PlayMarketSubscription.Period.Monthly }
         val annualBaseSub =
-            baseSubscriptions.first { it.period == PlayMarketSubscription.Period.Annual }
+            baseSubscriptions.firstOrNull { it.period == PlayMarketSubscription.Period.Annual }
         val monthlyBaseSub =
-            baseSubscriptions.first { it.period == PlayMarketSubscription.Period.Monthly }
+            baseSubscriptions.firstOrNull { it.period == PlayMarketSubscription.Period.Monthly }
+
+        if (annualBaseSub == null || monthlyBaseSub == null) {
+            return emptyMap()
+        }
 
         //Если у нас есть скидочная предложение то подсчет делаем относительно главной цены
         val annualDiscount = if (annualDiscountSub != null) {
