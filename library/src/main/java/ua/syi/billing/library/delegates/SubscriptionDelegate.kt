@@ -142,12 +142,9 @@ internal class SubscriptionDelegate(
         val subDetailOffer =
             subscriptionOfferDetails!!.firstOrNull { it.pricingPhases.pricingPhaseList.size > 1 }
                 ?: subscriptionOfferDetails!!.first()
-        val billingPeriod = subDetailOffer.basePlanId.lowercase()
+        val billingPeriod = subDetailOffer.pricingPhases.pricingPhaseList.last().billingPeriod
         val mainPricing = subDetailOffer.pricingPhases.pricingPhaseList.first {
-            it.billingPeriod.equals(
-                billingPeriod,
-                true
-            ) && it.billingCycleCount == 0
+            it.billingPeriod == billingPeriod && it.billingCycleCount == 0
         }
         val introductoryPrice =
             subDetailOffer.pricingPhases.pricingPhaseList.firstOrNull { it.billingCycleCount == 1 }
