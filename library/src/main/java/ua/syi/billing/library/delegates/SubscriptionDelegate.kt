@@ -136,7 +136,8 @@ internal class SubscriptionDelegate(
                 discount = discounts.getOrElse(sub.period) { 0 },
                 price = discountSub?.price ?: sub.price,
                 formattedPrice = discountSub?.formattedPrice ?: sub.formattedPrice,
-                formattedBasePrice = discountSub?.let { sub.formattedPrice }
+                formattedBasePrice = discountSub?.let { sub.formattedPrice },
+                payload = discountSub?.payload ?: sub.payload,
             )
         }
     }

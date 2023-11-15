@@ -21,7 +21,8 @@ class PlayMarketSubscription internal constructor(
         discount: Int? = null,
         price: Long? = null,
         formattedPrice: String? = null,
-        formattedBasePrice: String? = null
+        formattedBasePrice: String? = null,
+        payload: ProductDetails? = null,
     ): PlayMarketSubscription {
         return PlayMarketSubscription(
             id = id ?: this.id,
@@ -32,7 +33,7 @@ class PlayMarketSubscription internal constructor(
             introductoryFormattedPrice = introductoryFormattedPrice,
             introductoryPriceDays = introductoryPriceDays,
             discount = discount ?: this.discount,
-            payload = payload,
+            payload = payload ?: this.payload,
             offerToken = offerToken,
             currency = currency,
         )
