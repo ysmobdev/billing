@@ -9,9 +9,12 @@ import ua.syi.billing.library.models.PurchaseParams
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchaseHistoryParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryPurchaseHistory
+import com.android.billingclient.api.queryPurchasesAsync
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -42,12 +45,15 @@ internal class SubscriptionDelegate(
      */
 
     suspend fun getActiveSubscription(): ActiveSubscription? {
-        val params = QueryPurchaseHistoryParams.newBuilder()
+        val params = QueryPurchasesParams.newBuilder()
             .setProductType(BillingClient.ProductType.SUBS)
 
-        val purchaseHistoryResult = client.queryPurchaseHistory(params.build())
-        val purchases = purchaseHistoryResult.purchaseHistoryRecordList
-        val purchase = purchases?.maxByOrNull { it.purchaseTime } ?: return null
+        val purchasesResult = client.queryPurchasesAsync(params.build())
+
+//        val purchaseHistoryResult = client.queryPurchaseHistory(params.build())
+//        val purchases = purchaseHistoryResult.purchaseHistoryRecordList
+        val purchases = purchasesResult.purchasesList
+        val purchase = purchases.maxByOrNull { it.purchaseTime } ?: return null
         val subscriptions = getSubscriptions(purchase.products.toSet())
         val sub = subscriptions.first { sub -> purchase.products.any { p -> p == sub.id } }
 
