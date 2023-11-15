@@ -17,13 +17,14 @@ class PlayMarketSubscription internal constructor(
 ): Purchasable {
 
     internal fun copy(
+        id: String? = null,
         discount: Int? = null,
         price: Long? = null,
         formattedPrice: String? = null,
         formattedBasePrice: String? = null
     ): PlayMarketSubscription {
         return PlayMarketSubscription(
-            id = id,
+            id = id ?: this.id,
             period = period,
             price = price ?: this.price,
             formattedPrice = formattedPrice ?: this.formattedPrice,

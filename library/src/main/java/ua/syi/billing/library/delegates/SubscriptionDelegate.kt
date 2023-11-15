@@ -132,6 +132,7 @@ internal class SubscriptionDelegate(
         return subscriptions.map { sub ->
             val discountSub = discountSubscriptions.firstOrNull { it.period == sub.period }
             sub.copy(
+                id = discountSub?.id ?: sub.id,
                 discount = discounts.getOrElse(sub.period) { 0 },
                 price = discountSub?.price ?: sub.price,
                 formattedPrice = discountSub?.formattedPrice ?: sub.formattedPrice,
