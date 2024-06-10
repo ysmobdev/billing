@@ -19,7 +19,11 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -34,7 +38,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "ua.ysmobdev.billing"
             artifactId = "library"
-            version = "1.0.20"
+            version = "1.0.21"
 
             afterEvaluate {
                 from(components["release"])
