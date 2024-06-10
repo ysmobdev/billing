@@ -38,7 +38,7 @@ abstract class PlayMarketDelegate(protected val client: BillingClient) {
                 listOf(
                     BillingFlowParams.ProductDetailsParams.newBuilder()
                         .setProductDetails(productDetails)
-                        .setOfferToken(offerToken ?: "")
+                        .let { if (offerToken != null) it.setOfferToken(offerToken) else it }
                         .build()
                 )
             )

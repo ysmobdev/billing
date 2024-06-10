@@ -5,9 +5,10 @@ plugins {
 
 android {
     namespace = "ua.ysmobdev.billing.app"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
+        targetSdk = 34
         minSdk = 21
     }
 
@@ -29,7 +30,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
     implementation(project(":library"))
 }

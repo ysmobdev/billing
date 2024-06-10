@@ -16,7 +16,7 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".BillingActivity"
+            android:name="ua.syi.billing.BillingActivity"
             android:exported="true"
             android:theme="@style/Theme.App">
             <intent-filter>
