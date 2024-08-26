@@ -30,7 +30,7 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
     implementation("com.android.billingclient:billing-ktx:7.0.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 }
 
 publishing {
@@ -38,7 +38,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "ua.ysmobdev.billing"
             artifactId = "library"
-            version = "1.0.21"
+            version = "1.0.22"
 
             afterEvaluate {
                 from(components["release"])
