@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-//        minSdk = 21
+        minSdk = 21
 //        targetSdk = 33
     }
 
@@ -38,7 +38,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "ua.ysmobdev.billing"
             artifactId = "library"
-            version = "1.0.22"
+            version = "1.0.23"
 
             afterEvaluate {
                 from(components["release"])
