@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
+import ua.syi.billing.library.models.ActiveConsumable
+import ua.syi.billing.library.models.Type
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -94,6 +96,12 @@ class BillingServiceImpl(
         return consumableDelegate.getAvailableConsumables(ids)
     }
 
+    override suspend fun getActiveConsumables(): List<ActiveConsumable> {
+        Utils.retryIO { checkConnection() }
+        log("Request active consumables")
+        return consumableDelegate.getActiveConsumables()
+    }
+
     override suspend fun purchase(
         activity: Activity,
         item: Purchasable,
@@ -115,6 +123,17 @@ class BillingServiceImpl(
             is PlayMarketSubscriptionPurchase -> subscriptionDelegate.acknowledgePurchase(item)
             is PlayMarketConsumablePurchase -> consumableDelegate.consumePurchase(item)
             else -> throw IllegalArgumentException("Unsupported playMarketPurchase: $item")
+        }.also { isSuccess ->
+            log("Confirm purchase result: $isSuccess")
+        }
+    }
+
+    override suspend fun confirmPurchaseToken(purchaseToken: String, type: Type): Boolean {
+        Utils.retryIO { checkConnection() }
+        log("Confirm purchase token (${type.name}): $purchaseToken")
+        return when (type) {
+            Type.Subscription -> subscriptionDelegate.acknowledgePurchaseToken(purchaseToken)
+            Type.Consumable -> consumableDelegate.consumePurchaseToken(purchaseToken)
         }.also { isSuccess ->
             log("Confirm purchase result: $isSuccess")
         }

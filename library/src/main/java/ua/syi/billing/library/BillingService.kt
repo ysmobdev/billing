@@ -9,6 +9,8 @@ import ua.syi.billing.library.models.Purchasable
 import ua.syi.billing.library.models.PurchaseParams
 import ua.syi.billing.library.models.PurchaseStatus
 import kotlinx.coroutines.flow.SharedFlow
+import ua.syi.billing.library.models.ActiveConsumable
+import ua.syi.billing.library.models.Type
 
 interface BillingService {
 
@@ -25,8 +27,12 @@ interface BillingService {
         ids: Set<String>
     ): List<PlayMarketConsumable>
 
+    suspend fun getActiveConsumables(): List<ActiveConsumable>
+
     suspend fun purchase(activity: Activity, item: Purchasable, params: PurchaseParams)
 
     suspend fun confirmPurchase(item: PlayMarketPurchase): Boolean
+
+    suspend fun confirmPurchaseToken(purchaseToken: String, type: Type): Boolean
 
 }

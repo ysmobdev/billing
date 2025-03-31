@@ -34,8 +34,12 @@ internal class SubscriptionDelegate(
 
     suspend fun acknowledgePurchase(item: PlayMarketPurchase): Boolean {
         if (item.purchase.isAcknowledged) return true
+        return acknowledgePurchaseToken(item.purchaseToken)
+    }
+
+    suspend fun acknowledgePurchaseToken(purchaseToken: String): Boolean {
         val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
-            .setPurchaseToken(item.purchase.purchaseToken)
+            .setPurchaseToken(purchaseToken)
         val result = client.acknowledgePurchase(acknowledgePurchaseParams.build())
         return result.responseCode == BillingClient.BillingResponseCode.OK
     }
